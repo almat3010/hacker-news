@@ -1,0 +1,49 @@
+h1{
+    color: #fff;
+    margin-left: 10px;
+    display: inline-block;
+    text-align: center;
+    font-size: 24px;
+}
+header{
+    background: linear-gradient(90.19deg, #333333 -1.98%, #202020 104.73%);
+    height: 80px;
+}
+.container{
+    height: 80px;
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header{
+    &__btn{
+        background-color: #E88006;
+        border: none;
+        color: #fff;
+        text-transform: uppercase;
+        width: 89px;
+        height: 30px;
+        transition: all .3s;
+        border-radius: 8px;
+        &:hover {
+            background: darken(#FC6E51,7%);
+        }
+        &:disabled{
+            background-color: gray;
+        }
+        
+    }
+    &__img{
+        display: inline-block;
+        margin: 0 auto;
+    }
+    &__block{
+        display: flex;
+        align-items: center;
+    }
+    &__link{
+        text-decoration: none;
+    }
+}
