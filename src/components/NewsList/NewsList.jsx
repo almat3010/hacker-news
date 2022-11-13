@@ -1,4 +1,4 @@
-import { getNews, selectAll, updatePage } from '../../slices/newsSlice'
+import { getNews, selectAll, updatePage, updateNews } from '../../slices/newsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
@@ -11,8 +11,8 @@ import NewsItem from '../NewsItem/NewsItem'
 const NewsList = () => {
     const dispatch = useDispatch();
     const news = useSelector(selectAll);
-    const loadingNews = useSelector(state => state.news.newsLoading);
     const page = useSelector(state => state.news.page);
+    const loadingNews = useSelector(state => state.news.newsLoading);
     const hiddenBtn = page === 4 ? 'none' : 'block';
 
     useEffect(() => {
@@ -21,9 +21,19 @@ const NewsList = () => {
         }
         // eslint-disable-next-line
     },[])
+
+    useEffect(() => {
+        const intervalId = setInterval(()=>{
+            dispatch(updateNews());
+        }, 60000);
+        return () => clearInterval(intervalId);
+
+        // eslint-disable-next-line
+    },[]);
+
     return(
             <>
-            <Header></Header>
+                <Header update = {() => dispatch(updateNews())}  ></Header>
                 {
                     news.sort((a,b) => b.id - a.id).map(it => {
                         return(

@@ -1,7 +1,11 @@
+import { useSelector } from 'react-redux'
+
 import icon from '../../icons/icon.svg'
 import './Header.scss'
 
 const Header = (props) => {
+    const updatingNews = useSelector(state => state.news.newsUpdate);
+    const loadingNews = useSelector(state => state.news.newsLoading)
     return(
         <header>
             <div className="container font-face-gm">
@@ -13,7 +17,10 @@ const Header = (props) => {
                 </div>
                 <button 
                     className = 'header__btn font-face-gm'
-                    >
+                    disabled = {updatingNews || loadingNews ? true : false}
+                    onClick = {() => {
+                        props.update()
+                    }}>
                     update
                 </button>
             </div>
