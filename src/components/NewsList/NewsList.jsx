@@ -1,4 +1,4 @@
-import { getNews, selectAll } from '../../slices/newsSlice'
+import { getNews, selectAll, updatePage } from '../../slices/newsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
@@ -12,6 +12,8 @@ const NewsList = () => {
     const dispatch = useDispatch();
     const news = useSelector(selectAll);
     const loadingNews = useSelector(state => state.news.newsLoading);
+    const page = useSelector(state => state.news.page);
+    const hiddenBtn = page === 4 ? 'none' : 'block';
 
     useEffect(() => {
         if(news.length===0){
@@ -30,6 +32,15 @@ const NewsList = () => {
                     })
                 }
                 {loadingNews ? <Spinner/>  : null}
+                <button 
+                    style={{'display' : hiddenBtn}}
+                    className='news__btn'
+                    onClick={()=>{
+                        dispatch(getNews(25*page));
+                        dispatch(updatePage(1));
+                    }}
+                    disabled = {page === 4 || loadingNews ? true : false}
+                >Load more</button>
             </>
     )
 }

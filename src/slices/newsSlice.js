@@ -33,6 +33,21 @@ export const getNews = createAsyncThunk(
     }
 )
 
+export const updateNews = createAsyncThunk(
+    'news/updateNews',
+    async (_, thunkAPI) => {
+        const {request} = useHttp();
+        const dataId = await request("https://hacker-news.firebaseio.com/v0/newstories.json?print=pretty&orderBy=%22$key%22&limitToFirst=100");
+        const prevState = thunkAPI.getState();
+        const newNews = Promise.all(
+            dataId.slice(0,Object.keys(prevState.news.entities).length).map((it) => {
+                    return request(`https://hacker-news.firebaseio.com/v0/item/${it}.json`);
+                })
+        )
+        return newNews;
+    }
+)
+
 const newsSlice = createSlice({
     name: 'news',
     initialState,
@@ -49,10 +64,19 @@ const newsSlice = createSlice({
                 newsAdapter.addMany(state, action.payload)
             })
             .addCase(getNews.rejected, state => {state.newsLoading = false})
+
+            .addCase(updateNews.pending, state => {state.newsUpdate = true})
+            .addCase(updateNews.fulfilled, (state, action) => {
+                state.newsUpdate = false
+                newsAdapter.setAll(state, action.payload)
+            })
+            .addCase(updateNews.rejected, state => {state.newsUpdate = false})
     }
 });
 
 const {actions, reducer} = newsSlice;
 export const {selectAll} = newsAdapter.getSelectors(state => state.news)
+export const {updatePage} = actions
+
 
 export default reducer
