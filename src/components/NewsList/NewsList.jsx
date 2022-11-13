@@ -1,4 +1,4 @@
-import { getNews, selectAll, updateNews } from '../../slices/newsSlice'
+import { getNews, selectAll } from '../../slices/newsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
@@ -19,27 +19,17 @@ const NewsList = () => {
         }
         // eslint-disable-next-line
     },[])
-
-    useEffect(() => {
-        const intervalId = setInterval(()=>{
-            dispatch(updateNews());
-        }, 60000);
-        return () => clearInterval(intervalId);
-
-        // eslint-disable-next-line
-    },[]);
-
     return(
             <>
-                <Header update = {() => dispatch(updateNews())}  ></Header>
-                    {
-                        news.sort((a,b) => b.id - a.id).map(it => {
-                            return(
-                                <NewsItem key = {it.id} id={it.id} {...it}></NewsItem>
-                            )
-                        })
-                    }
-                    {loadingNews ? <Spinner/>  : null}
+            <Header></Header>
+                {
+                    news.sort((a,b) => b.id - a.id).map(it => {
+                        return(
+                            <NewsItem key = {it.id} id={it.id} {...it}></NewsItem>
+                        )
+                    })
+                }
+                {loadingNews ? <Spinner/>  : null}
             </>
     )
 }
