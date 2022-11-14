@@ -12,7 +12,6 @@ const Article = () => {
     const news = useSelector(state => state.news.article);
     const dispatch = useDispatch();
     const hist = useHistory();
-    console.log(article)
     return (
         <>
             {article.by ? 
