@@ -74,6 +74,10 @@ const newsSlice = createSlice({
         updateArticle: (state, action) => {
             state.article = action.payload
         },
+        clearComments: (state) => {
+            state.subComments = []
+            state.comments = []
+        }
     },
     extraReducers: builder => {
         builder
