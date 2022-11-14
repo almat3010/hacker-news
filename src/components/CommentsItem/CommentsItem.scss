@@ -1,0 +1,34 @@
+.comments{
+    &__item{
+        border-bottom: solid;
+        border-bottom-color: rgb(185, 185, 185);
+        width: 1200px;
+        margin: 0 auto;
+        margin-top: 15px;
+    }
+    &__author{
+        font-size: 12px;
+    }
+    &__text{
+        margin-top: 5px;
+        padding-left: 7px;
+        margin-bottom: 5px;
+    }
+    &__btn{
+        text-decoration: underline;
+        padding-left: 7px;
+        font-size: 12px;
+        padding-bottom: 5px;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+a{
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    &:hover {
+        color: #E88006;
+    }
+}

@@ -1,0 +1,46 @@
+.title{
+    margin: 0 auto;
+    width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+    &__link{
+        cursor: pointer;
+        color: black;
+        text-decoration: none;
+        margin-top: 16px;
+        &:hover {
+            color: #E88006;
+        }
+    }
+    &__header{
+        font-size: 48px;
+        text-align: center;
+    }
+    &__author{
+        margin-top: 15px;
+    }
+    &__date{
+        margin-top: 15px;
+        display: flex;
+            align-items: center;
+            img{
+                margin-right: 5px;
+            }
+    }
+    &__comments{
+        margin-top: 15px;
+    }
+    &__btn-back{
+        align-self: start;
+        cursor: pointer;
+        &:hover {
+            color: #E88006;
+        }
+        img{
+            margin-right: 8px;
+        }
+    }
+}
