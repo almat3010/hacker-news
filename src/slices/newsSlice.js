@@ -51,6 +51,19 @@ export const updateNews = createAsyncThunk(
     }
 )
 
+export const getComments = createAsyncThunk(
+    'news/getComments',
+    ({ids}) => {
+        const {request} = useHttp();
+        const comments = Promise.all(
+            ids.map(id => {
+                return request(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+            })
+        )
+        return comments;
+    }
+)
+
 const newsSlice = createSlice({
     name: 'news',
     initialState,
@@ -70,6 +83,22 @@ const newsSlice = createSlice({
                 newsAdapter.addMany(state, action.payload)
             })
             .addCase(getNews.rejected, state => {state.newsLoading = false})
+
+            .addCase(getComments.pending, (state,action) => {
+                if(action.meta.arg.type === 'comment'){
+                    state.commentsLoading = true
+                }
+            })
+            .addCase(getComments.fulfilled, (state, action) => {
+                if(action.meta.arg.type === 'comment'){
+                    state.commentsLoading = false
+                    state.comments = action.payload
+                }else{
+                    state.commentsLoading = false
+                    state.subComments = [...state.subComments, ...action.payload]
+                }
+            })
+            .addCase(getComments.rejected, state => {state.commentsLoading = false})
 
             .addCase(updateNews.pending, state => {state.newsUpdate = true})
             .addCase(updateNews.fulfilled, (state, action) => {
