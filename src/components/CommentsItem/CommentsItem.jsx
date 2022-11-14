@@ -1,3 +1,4 @@
+import cleanHtml from '../../helpers/sanitizeHTML';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
 import { getComments } from '../../slices/newsSlice';
@@ -24,8 +25,8 @@ const CommentsItem = (props) => {
                 {props.dead || props.deleted ? 'sorry comment was deleted or dead' : 'by'+props.by}
             </div>
             <div 
+                dangerouslySetInnerHTML={{ __html: cleanHtml(props.text) }} 
                 className="comments__text">
-                {props.text}
             </div>
             {
                 props.kids  ? 
