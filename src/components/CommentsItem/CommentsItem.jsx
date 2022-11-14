@@ -1,7 +1,7 @@
 import cleanHtml from '../../helpers/sanitizeHTML';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
-import { getComments } from '../../slices/newsSlice';
+import { getItem } from '../../slices/newsSlice';
 
 import './CommentsItem.scss'
 
@@ -11,7 +11,7 @@ const CommentsItem = (props) => {
     const subComments = useSelector(state => state.news.subComments);
     useEffect(() => {
         if(props.kids){
-            dispatch(getComments({
+            dispatch(getItem({
                 ids: props.kids,
                 type: 'subcomments'
             }));

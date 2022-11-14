@@ -51,10 +51,11 @@ export const updateNews = createAsyncThunk(
     }
 )
 
-export const getComments = createAsyncThunk(
-    'news/getComments',
+export const getItem = createAsyncThunk(
+    'news/getItem',
     ({ids}) => {
         const {request} = useHttp();
+        console.log(ids);
         const comments = Promise.all(
             ids.map(id => {
                 return request(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
@@ -88,21 +89,23 @@ const newsSlice = createSlice({
             })
             .addCase(getNews.rejected, state => {state.newsLoading = false})
 
-            .addCase(getComments.pending, (state,action) => {
+            .addCase(getItem.pending, (state,action) => {
                 if(action.meta.arg.type === 'comment'){
                     state.commentsLoading = true
                 }
             })
-            .addCase(getComments.fulfilled, (state, action) => {
+            .addCase(getItem.fulfilled, (state, action) => {
                 if(action.meta.arg.type === 'comment'){
                     state.commentsLoading = false
                     state.comments = action.payload
-                }else{
+                }else if(action.meta.arg.type === 'subcomments'){
                     state.commentsLoading = false
                     state.subComments = [...state.subComments, ...action.payload]
+                }else if(action.meta.arg.type === 'article'){
+                    state.article = action.payload[0];
                 }
             })
-            .addCase(getComments.rejected, state => {state.commentsLoading = false})
+            .addCase(getItem.rejected, state => {state.commentsLoading = false})
 
             .addCase(updateNews.pending, state => {state.newsUpdate = true})
             .addCase(updateNews.fulfilled, (state, action) => {

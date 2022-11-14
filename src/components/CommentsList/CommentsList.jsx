@@ -1,4 +1,4 @@
-import { getComments, clearComments } from '../../slices/newsSlice'
+import { getItem, clearComments } from '../../slices/newsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import CommentsItem from '../CommentsItem/CommentsItem'
@@ -12,7 +12,7 @@ const CommentsList = () => {
     const loadingComments = useSelector(state => state.news.commentsLoading);
     useEffect(() => {
         if(article.descendants > 0){
-            dispatch(getComments({
+            dispatch(getItem({
                 ids: article.kids,
                 type: 'comment'
             }))

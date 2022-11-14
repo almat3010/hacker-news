@@ -1,4 +1,4 @@
-import { getComments, clearComments } from '../../slices/newsSlice'
+import { getItem, clearComments } from '../../slices/newsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from "react-router";
 import Header from '../Header/Header'
@@ -19,7 +19,7 @@ const Article = () => {
                 <>
                     <Header 
                         update = { () =>
-                            dispatch(getComments({
+                            dispatch(getItem({
                                 ids: article.kids,
                                 type: 'comment'
                             }))

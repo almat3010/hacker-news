@@ -9,7 +9,6 @@ import person from '../../icons/person-icon.svg'
 import './NewsItem.scss'
 
 const NewsItem = (props) => {
-    const dispatch = useDispatch();
     const timeFormat = new Date(props.time * 1000);
     const displayDate = `${timeFormat.getDate()}.${timeFormat.getMonth() + 1}.${timeFormat.getFullYear()}`;
     return(
@@ -23,17 +22,8 @@ const NewsItem = (props) => {
                     <Link className="news__link" to={`/article/${props.id}`}>
                         <div 
                             className="news__item__title"
-                            onClick={() => dispatch(updateArticle(
-                                {
-                                    id: props.id,
-                                    title: props.title,
-                                    by: props.by,
-                                    time: displayDate,
-                                    descendants: props.descendants,
-                                    kids: props.kids,
-                                    url: props.url
-                                }
-                            ))}>
+                           
+                            >
                             {props.dead? 'deleted/dead' : props.title} 
                         </div>
                     </Link>
