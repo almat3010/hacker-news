@@ -20,7 +20,7 @@ const NewsItem = (props) => {
                     {props.score}
                 </div>
                 <div className="news__item">
-                    <Link className="news__link" to={`/${props.id}`}>
+                    <Link className="news__link" to={`/article/${props.id}`}>
                         <div 
                             className="news__item__title"
                             onClick={() => dispatch(updateArticle(
@@ -34,7 +34,7 @@ const NewsItem = (props) => {
                                     url: props.url
                                 }
                             ))}>
-                            {props.title} 
+                            {props.dead? 'deleted/dead' : props.title} 
                         </div>
                     </Link>
                     <div className="news__item__wrapper">
