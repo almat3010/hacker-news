@@ -1,36 +1,47 @@
+import { getComments, clearComments } from '../../slices/newsSlice'
+import { useSelector, useDispatch } from 'react-redux'
 import Header from '../Header/Header'
 import time from '../../icons/time-icon.svg'
 import back from '../../icons/back-icon.svg'
 import './Title.scss'
 
 const Article = () => {
+    const article = useSelector(state => state.news.article);
+    const news = useSelector(state => state.news.article);
+    const dispatch = useDispatch();
     return (
         <>
-            <Header></Header>
-            <div  className="title">
+            <Header update = { () =>
+                dispatch(getComments({
+                    ids: article.kids,
+                    type: 'comment'
+                }))
+            }
+            clear = {() => dispatch(clearComments())}
+            ></Header>
+            <div key={news.id} className="title">
                 <div 
-                    className="title__btn-back"
-                    >
+                    className="title__btn-back">
                     <img src={back} alt="back-icon" />
                     back
                 </div>
                 <a 
                     target="_blank" rel="noopener noreferrer"
                     className='title__link' 
-                    href='#'>
+                    href={news.url}>
                     <div className="title__header">
-                        
+                        {news.title}
                     </div>
                 </a>
                 <div className="title__author">
-                    by 
+                    by {news.by}
                 </div>
                 <div className="title__date">
                     <img src={time} alt="icon-time" />
-                    
+                    {news.time}
                 </div>
                 <div className="title__comments">
-                    Comments: 
+                    Comments: {news.descendants}
                 </div>
             </div>
         </>

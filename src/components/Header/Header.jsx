@@ -5,6 +5,7 @@ import './Header.scss'
 
 const Header = (props) => {
     const updatingNews = useSelector(state => state.news.newsUpdate);
+    const loadingComments = useSelector(state => state.news.commentsLoading);
     const loadingNews = useSelector(state => state.news.newsLoading)
     return(
         <header>
@@ -17,8 +18,9 @@ const Header = (props) => {
                 </div>
                 <button 
                     className = 'header__btn font-face-gm'
-                    disabled = {updatingNews || loadingNews ? true : false}
+                    disabled = {updatingNews || loadingComments || loadingNews ? true : false}
                     onClick = {() => {
+                        props.clear()
                         props.update()
                     }}>
                     update

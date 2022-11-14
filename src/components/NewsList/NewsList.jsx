@@ -33,7 +33,7 @@ const NewsList = () => {
 
     return(
             <>
-                <Header update = {() => dispatch(updateNews())}  ></Header>
+            <Header update = {() => dispatch(updateNews())} clear = {() => {return undefined}} ></Header>
                 {
                     news.sort((a,b) => b.id - a.id).map(it => {
                         return(

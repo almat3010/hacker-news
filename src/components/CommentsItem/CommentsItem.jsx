@@ -1,37 +1,59 @@
-import { getComments, clearComments } from '../../slices/newsSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import CommentsItem from '../CommentsItem/CommentsItem'
-import Spinner from '../Spinner/Spinner'
+import { useEffect, useState } from 'react';
+import { getComments } from '../../slices/newsSlice';
 
-import './CommentsList.scss'
-const CommentsList = () => {
+import './CommentsItem.scss'
+
+const CommentsItem = (props) => {
+    const [showSubComments, setShowSubComments] = useState(false);
     const dispatch = useDispatch();
-    const article = useSelector(state => state.news.article);
-    const comments = useSelector(state => state.news.comments);
-    const loadingComments = useSelector(state => state.news.commentsLoading);
+    const subComments = useSelector(state => state.news.subComments);
     useEffect(() => {
-        if(article.descendants > 0){
+        if(props.kids){
             dispatch(getComments({
-                ids: article.kids,
-                type: 'comment'
-            }))
+                ids: props.kids,
+                type: 'subcomments'
+            }));
         }
-        return () => dispatch(clearComments())
-    // eslint-disable-next-line
-    },[]);
+        // eslint-disable-next-line
+    },[props.kids]);
+
     return(
-        <>
-            {loadingComments ? <Spinner/>  : null}
+        <div style={props.style} className="comments__item">
+            <div className="comments__author">
+                {props.dead || props.deleted ? 'sorry comment was deleted or dead' : 'by'+props.by}
+            </div>
+            <div 
+                className="comments__text">
+                {props.text}
+            </div>
             {
-                article.descendants ?
-                comments.map((comment) => {
-                    return <CommentsItem key={comment.id} id={comment.id} {...comment} ></CommentsItem>
-                })
-                : <div className="not_found">no comments found</div>
+                props.kids  ? 
+                    <div 
+                    className="comments__btn"
+                    onClick={()=>{
+                        setShowSubComments(!showSubComments)
+                    }}
+                    >more</div>
+                : null
             }
-        </>
+            {// eslint-disable-next-line
+                subComments.map(it => {
+                    if(it.parent === props.id){
+                        return <CommentsItem 
+                                key={it.id} 
+                                style={{
+                                        display:`${showSubComments ?'block':'none'}`,
+                                        paddingLeft:'25px', 
+                                        borderBottom:'none'
+                                    }} 
+                                id={it.id} {...it} />
+                    }
+                })
+
+            }
+        </div>
     )
 }
 
-export default CommentsList
+export default CommentsItem
