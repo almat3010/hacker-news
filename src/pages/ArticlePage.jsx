@@ -4,7 +4,7 @@ import Title from '../components/Title/Title'
 const ArticlePage = () => {
     return(
         <>
-            <Title></Title>
+            <Title/>
             <CommentsList/>
         </>
     )

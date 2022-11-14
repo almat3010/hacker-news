@@ -17,26 +17,26 @@ const CommentsItem = (props) => {
             }));
         }
         // eslint-disable-next-line
-    },[props.kids]);
+    },[]);
 
     return(
         <div style={props.style} className="comments__item">
             <div className="comments__author">
-                {props.dead || props.deleted ? 'sorry comment was deleted or dead' : 'by'+props.by}
+                {props.dead || props.deleted ? 'sorry comment was deleted or dead' : `by ${props.by}`}
             </div>
             <div 
                 dangerouslySetInnerHTML={{ __html: cleanHtml(props.text) }} 
                 className="comments__text">
             </div>
             {
-                props.kids  ? 
+                props.kids &&
                     <div 
                     className="comments__btn"
                     onClick={()=>{
                         setShowSubComments(!showSubComments)
                     }}
                     >more</div>
-                : null
+                
             }
             {// eslint-disable-next-line
                 subComments.map(it => {

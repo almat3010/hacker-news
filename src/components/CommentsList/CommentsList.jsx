@@ -22,7 +22,7 @@ const CommentsList = () => {
     },[]);
     return(
         <>
-            {loadingComments ? <Spinner/>  : null}
+            {loadingComments && <Spinner/>}
             {
                 article.descendants ?
                 comments.map((comment) => {
