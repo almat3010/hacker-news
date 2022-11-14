@@ -1,5 +1,6 @@
 import { getComments, clearComments } from '../../slices/newsSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from "react-router";
 import Header from '../Header/Header'
 import time from '../../icons/time-icon.svg'
 import back from '../../icons/back-icon.svg'
@@ -9,6 +10,7 @@ const Article = () => {
     const article = useSelector(state => state.news.article);
     const news = useSelector(state => state.news.article);
     const dispatch = useDispatch();
+    const hist = useHistory();
     return (
         <>
             <Header update = { () =>
@@ -21,7 +23,8 @@ const Article = () => {
             ></Header>
             <div key={news.id} className="title">
                 <div 
-                    className="title__btn-back">
+                    className="title__btn-back"
+                    onClick={()=>{hist.goBack()}}>
                     <img src={back} alt="back-icon" />
                     back
                 </div>

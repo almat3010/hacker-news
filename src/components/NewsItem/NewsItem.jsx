@@ -1,4 +1,5 @@
 import { updateArticle } from '../../slices/newsSlice'
+import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import comments from '../../icons/comment-icon.svg'
@@ -19,6 +20,7 @@ const NewsItem = (props) => {
                     {props.score}
                 </div>
                 <div className="news__item">
+                    <Link className="news__link" to={`/${props.id}`}>
                         <div 
                             className="news__item__title"
                             onClick={() => dispatch(updateArticle(
@@ -34,6 +36,7 @@ const NewsItem = (props) => {
                             ))}>
                             {props.title} 
                         </div>
+                    </Link>
                     <div className="news__item__wrapper">
                         <div className="news__item__author">
                             <img src={person} alt="icon-person" />

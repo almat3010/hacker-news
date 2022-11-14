@@ -115,7 +115,6 @@ const newsSlice = createSlice({
 
 const {actions, reducer} = newsSlice;
 export const {selectAll} = newsAdapter.getSelectors(state => state.news)
-export const {updatePage} = actions
-
+export const {updatePage, updateArticle, clearComments} = actions
 
 export default reducer
