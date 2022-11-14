@@ -1,4 +1,4 @@
-import cleanHtml from '../../helpers/sanitizeHTML';
+import cleanHtml from '../../helpers/helpers';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react';
 import { getItem } from '../../slices/newsSlice';

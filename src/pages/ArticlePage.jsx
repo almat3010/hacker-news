@@ -1,25 +1,31 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { clearArticle, getItem } from '../slices/newsSlice'
 import CommentsList from '../components/CommentsList/CommentsList'
+import Spinner from '../components/Spinner/Spinner'
 import Title from '../components/Title/Title'
-import { getItem } from '../slices/newsSlice'
 
 const ArticlePage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
-
+    const loading = useSelector(state => state.news.articleLoading);
     useEffect(()=>{
-        console.log([id])
         dispatch(getItem({
             ids: [id],
             type: 'article'
         }));
+        return () => dispatch(clearArticle());
     },[]);
     return(
         <>
-            <Title/>
-            <CommentsList/>
+            {
+                loading ? <Spinner/> 
+                :<>
+                    <Title/>
+                    <CommentsList/>
+                </>
+             }
         </>
     )
 }

@@ -25,9 +25,9 @@ const CommentsList = () => {
             {loadingComments && <Spinner/>}
             {
                 article.descendants ?
-                comments.map((comment) => {
-                    return <CommentsItem key={comment.id} id={comment.id} {...comment} ></CommentsItem>
-                })
+                    comments.map((comment) => {
+                        return <CommentsItem key={comment.id} id={comment.id} {...comment} ></CommentsItem>
+                    })
                 : <div className="not_found">no comments found</div>
             }
         </>

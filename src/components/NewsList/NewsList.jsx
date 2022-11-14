@@ -11,6 +11,7 @@ const NewsList = () => {
     const dispatch = useDispatch();
     const news = useSelector(selectAll);
     const page = useSelector(state => state.news.page);
+    const sortedNews = news.sort((a,b) => b.id - a.id);
     const loadingNews = useSelector(state => state.news.newsLoading);
 
     useEffect(() => {
@@ -29,27 +30,31 @@ const NewsList = () => {
         // eslint-disable-next-line
     },[]);
 
+    const handleUpdate = () => {
+        dispatch(updateNews());
+    }
+
     return(
             <>
-            <Header update = {() => dispatch(updateNews())} clear = {() => {return undefined}} ></Header>
+            <Header onClick = {handleUpdate} ></Header>
                 {
-                    news.sort((a,b) => b.id - a.id).map(it => {
+                    sortedNews.map(it => {
                         return(
                             <NewsItem key = {it.id} id={it.id} {...it}></NewsItem>
                         )
                     })
                 }
-                {loadingNews ? <Spinner/>  : null}
+                {loadingNews && <Spinner/>}
                 {
                     page < 4 &&
                     <button 
-                    className='news__btn'
-                    onClick={()=>{
-                        dispatch(getNews(25*page));
-                        dispatch(updatePage(1));
-                    }}
-                    disabled = {page === 4 || loadingNews ? true : false}
-                >Load more</button>
+                        className='news__btn'
+                        onClick={()=>{
+                            dispatch(getNews(25*page));
+                            dispatch(updatePage(1));
+                        }}
+                        disabled = {page === 4 || loadingNews ? true : false}
+                    >Load more</button>
                 }
             </>
     )

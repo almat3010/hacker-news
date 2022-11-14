@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import MainPage from "../../pages/MainPage";
-import ArticlePage from "../../pages/ArticlePage";
+import MainPage from "./pages/MainPage";
+import ArticlePage from "./pages/ArticlePage";
 import './App.scss'
-import ErrorComponent from "../Error/Error";
+import ErrorComponent from "./components/Error/Error";
 
 function App() {
   return (

@@ -19,10 +19,7 @@ const Header = (props) => {
                 <button 
                     className = 'header__btn font-face-gm'
                     disabled = {updatingNews || loadingComments || loadingNews ? true : false}
-                    onClick = {() => {
-                        props.clear()
-                        props.update()
-                    }}>
+                    onClick = {props.onClick}>
                     update
                 </button>
             </div>

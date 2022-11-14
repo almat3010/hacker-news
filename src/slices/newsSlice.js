@@ -16,7 +16,8 @@ const initialState = newsAdapter.getInitialState({
     newsLoading: false,
     newsUpdate : false,
     commentsLoading: false,
-    article: {},
+    articleLoading: false,
+    article: [],
     comments: [],
     subComments: [],
     page: 1
@@ -55,7 +56,6 @@ export const getItem = createAsyncThunk(
     'news/getItem',
     ({ids}) => {
         const {request} = useHttp();
-        console.log(ids);
         const comments = Promise.all(
             ids.map(id => {
                 return request(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
@@ -72,8 +72,8 @@ const newsSlice = createSlice({
         updatePage: (state, action) => {
             state.page += action.payload
         },
-        updateArticle: (state, action) => {
-            state.article = action.payload
+        clearArticle: (state) => {
+            state.article = [];
         },
         clearComments: (state) => {
             state.subComments = []
@@ -84,25 +84,28 @@ const newsSlice = createSlice({
         builder
             .addCase(getNews.pending, state => {state.newsLoading = true})
             .addCase(getNews.fulfilled, (state, action) => {
-                state.newsLoading = false
-                newsAdapter.addMany(state, action.payload)
+                state.newsLoading = false;
+                newsAdapter.addMany(state, action.payload);
             })
             .addCase(getNews.rejected, state => {state.newsLoading = false})
 
             .addCase(getItem.pending, (state,action) => {
                 if(action.meta.arg.type === 'comment'){
-                    state.commentsLoading = true
+                    state.commentsLoading = true;
+                }else if(action.meta.arg.type ==='article'){
+                    state.articleLoading = true;
                 }
             })
             .addCase(getItem.fulfilled, (state, action) => {
                 if(action.meta.arg.type === 'comment'){
-                    state.commentsLoading = false
-                    state.comments = action.payload
+                    state.commentsLoading = false;
+                    state.comments = action.payload;
                 }else if(action.meta.arg.type === 'subcomments'){
-                    state.commentsLoading = false
-                    state.subComments = [...state.subComments, ...action.payload]
+                    state.commentsLoading = false;
+                    state.subComments = [...state.subComments, ...action.payload];
                 }else if(action.meta.arg.type === 'article'){
                     state.article = action.payload[0];
+                    state.articleLoading = false;
                 }
             })
             .addCase(getItem.rejected, state => {state.commentsLoading = false})
@@ -118,6 +121,6 @@ const newsSlice = createSlice({
 
 const {actions, reducer} = newsSlice;
 export const {selectAll} = newsAdapter.getSelectors(state => state.news)
-export const {updatePage, updateArticle, clearComments} = actions
+export const {updatePage, clearArticle, clearComments} = actions
 
 export default reducer

@@ -1,6 +1,5 @@
-import { updateArticle } from '../../slices/newsSlice'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import {transformTime} from '../../helpers/helpers.js'
 
 import comments from '../../icons/comment-icon.svg'
 import time from '../../icons/time-icon.svg'
@@ -9,8 +8,7 @@ import person from '../../icons/person-icon.svg'
 import './NewsItem.scss'
 
 const NewsItem = (props) => {
-    const timeFormat = new Date(props.time * 1000);
-    const displayDate = `${timeFormat.getDate()}.${timeFormat.getMonth() + 1}.${timeFormat.getFullYear()}`;
+    const transformDate = transformTime(props.time);
     return(
         <>
             <div className="news__block">
@@ -20,10 +18,7 @@ const NewsItem = (props) => {
                 </div>
                 <div className="news__item">
                     <Link className="news__link" to={`/article/${props.id}`}>
-                        <div 
-                            className="news__item__title"
-                           
-                            >
+                        <div className="news__item__title">
                             {props.dead? 'deleted/dead' : props.title} 
                         </div>
                     </Link>
@@ -34,7 +29,7 @@ const NewsItem = (props) => {
                         </div>
                         <div className="news__item__date">
                             <img src={time} alt="icon-time" />
-                            {displayDate}
+                            {transformDate}
                         </div>
                     </div>
                 </div>
