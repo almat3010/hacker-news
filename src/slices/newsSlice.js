@@ -16,6 +16,9 @@ const initialState = newsAdapter.getInitialState({
     newsLoading: false,
     newsUpdate : false,
     commentsLoading: false,
+    article: {},
+    comments: [],
+    subComments: [],
     page: 1
 });
 
@@ -54,6 +57,9 @@ const newsSlice = createSlice({
     reducers: {
         updatePage: (state, action) => {
             state.page += action.payload
+        },
+        updateArticle: (state, action) => {
+            state.article = action.payload
         },
     },
     extraReducers: builder => {

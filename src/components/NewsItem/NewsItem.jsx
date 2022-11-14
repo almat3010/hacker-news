@@ -1,3 +1,6 @@
+import { updateArticle } from '../../slices/newsSlice'
+import { useDispatch } from 'react-redux'
+
 import comments from '../../icons/comment-icon.svg'
 import time from '../../icons/time-icon.svg'
 import rating from '../../icons/rating-icon.svg'
@@ -5,6 +8,7 @@ import person from '../../icons/person-icon.svg'
 import './NewsItem.scss'
 
 const NewsItem = (props) => {
+    const dispatch = useDispatch();
     const timeFormat = new Date(props.time * 1000);
     const displayDate = `${timeFormat.getDate()}.${timeFormat.getMonth() + 1}.${timeFormat.getFullYear()}`;
     return(
@@ -17,7 +21,17 @@ const NewsItem = (props) => {
                 <div className="news__item">
                         <div 
                             className="news__item__title"
-                            >
+                            onClick={() => dispatch(updateArticle(
+                                {
+                                    id: props.id,
+                                    title: props.title,
+                                    by: props.by,
+                                    time: displayDate,
+                                    descendants: props.descendants,
+                                    kids: props.kids,
+                                    url: props.url
+                                }
+                            ))}>
                             {props.title} 
                         </div>
                     <div className="news__item__wrapper">
