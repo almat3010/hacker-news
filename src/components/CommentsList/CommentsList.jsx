@@ -18,7 +18,6 @@ const CommentsList = () => {
             }))
         }
         return () => dispatch(clearComments())
-    // eslint-disable-next-line
     },[]);
     return(
         <>

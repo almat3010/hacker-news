@@ -39,7 +39,7 @@ const NewsItem = (props) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default NewsItem
+export default NewsItem;

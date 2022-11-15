@@ -2,6 +2,7 @@ import { getItem, clearComments } from '../../slices/newsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import {transformTime} from '../../helpers/helpers.js'
 import { useHistory } from "react-router";
+import { Link } from 'react-router-dom';
 import Header from '../Header/Header'
 import time from '../../icons/time-icon.svg'
 import back from '../../icons/back-icon.svg'
@@ -11,8 +12,11 @@ const Article = () => {
     const article = useSelector(state => state.news.article);
     const transformDate = transformTime(article.time);
     const dispatch = useDispatch();
-    const hist = useHistory();
     const handleUpdate = () => {
+        dispatch(getItem({
+            ids: [article.id],
+            type: 'article'
+        }));
         dispatch(getItem({
             ids: article.kids,
             type: 'comment'
@@ -24,13 +28,11 @@ const Article = () => {
             <Header onClick = {handleUpdate}>
             </Header>
             <div key={article.id} className="title">
-                <div 
-                    className="title__btn-back"
-                    onClick={()=>{
-                        hist.goBack();
-                    }}>
-                    <img src={back} alt="back-icon" />
-                    back
+                <div className="title__btn-back" >
+                    <Link to='/'>
+                        <img src={back} alt="back-icon" />
+                        <span>back</span>
+                    </Link>
                 </div>
                 <a 
                     target="_blank" rel="noopener noreferrer"

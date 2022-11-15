@@ -16,7 +16,6 @@ const CommentsItem = (props) => {
                 type: 'subcomments'
             }));
         }
-        // eslint-disable-next-line
     },[]);
 
     return(
@@ -38,7 +37,7 @@ const CommentsItem = (props) => {
                     >more</div>
                 
             }
-            {// eslint-disable-next-line
+            {
                 subComments.map(it => {
                     if(it.parent === props.id){
                         return <CommentsItem 

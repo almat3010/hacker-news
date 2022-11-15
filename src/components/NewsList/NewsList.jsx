@@ -18,21 +18,18 @@ const NewsList = () => {
         if(news.length===0){
             dispatch(getNews());
         }
-        // eslint-disable-next-line
-    },[])
+    },[]);
 
     useEffect(() => {
         const intervalId = setInterval(()=>{
             dispatch(updateNews());
         }, 60000);
         return () => clearInterval(intervalId);
-
-        // eslint-disable-next-line
     },[]);
 
     const handleUpdate = () => {
         dispatch(updateNews());
-    }
+    };
 
     return(
             <>
@@ -41,7 +38,7 @@ const NewsList = () => {
                     sortedNews.map(it => {
                         return(
                             <NewsItem key = {it.id} id={it.id} {...it}></NewsItem>
-                        )
+                        );
                     })
                 }
                 {loadingNews && <Spinner/>}
@@ -57,7 +54,7 @@ const NewsList = () => {
                     >Load more</button>
                 }
             </>
-    )
-}
+    );
+};
 
-export default NewsList
+export default NewsList;

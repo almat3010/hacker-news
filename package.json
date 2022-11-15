@@ -25,7 +25,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off",
+      "array-callback-return": "off"
+    }
   },
   "browserslist": {
     "production": [
