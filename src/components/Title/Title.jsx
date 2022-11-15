@@ -1,7 +1,6 @@
 import { getItem, clearComments } from '../../slices/newsSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import {transformTime} from '../../helpers/helpers.js'
-import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header'
 import time from '../../icons/time-icon.svg'

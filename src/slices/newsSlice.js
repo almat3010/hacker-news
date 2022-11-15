@@ -17,6 +17,7 @@ const initialState = newsAdapter.getInitialState({
     newsUpdate : false,
     commentsLoading: false,
     articleLoading: false,
+    subCommLoading: false,
     article: [],
     comments: [],
     subComments: [],
@@ -94,6 +95,8 @@ const newsSlice = createSlice({
                     state.commentsLoading = true;
                 }else if(action.meta.arg.type ==='article'){
                     state.articleLoading = true;
+                }else if(action.meta.arg.type ==='subcomments'){
+                    state.subCommLoading = true
                 }
             })
             .addCase(getItem.fulfilled, (state, action) => {
@@ -102,6 +105,7 @@ const newsSlice = createSlice({
                     state.comments = action.payload;
                 }else if(action.meta.arg.type === 'subcomments'){
                     state.commentsLoading = false;
+                    state.subCommLoading = false;
                     state.subComments = [...state.subComments, ...action.payload];
                 }else if(action.meta.arg.type === 'article'){
                     state.article = action.payload[0];
