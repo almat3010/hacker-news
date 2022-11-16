@@ -96,8 +96,9 @@ const newsSlice = createSlice({
                     state.commentsLoading = true;
                 }else if(action.meta.arg.type ==='article'){
                     state.articleLoading = true;
+                    state.articleError = false;
                 }else if(action.meta.arg.type ==='subcomments'){
-                    state.subCommLoading = true
+                    state.subCommLoading = true;
                 }
             })
             .addCase(getItem.fulfilled, (state, action) => {
