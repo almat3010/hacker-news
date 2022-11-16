@@ -17,6 +17,7 @@ const initialState = newsAdapter.getInitialState({
     newsUpdate : false,
     commentsLoading: false,
     articleLoading: false,
+    articleError: false,
     subCommLoading: false,
     article: [],
     comments: [],
@@ -108,11 +109,21 @@ const newsSlice = createSlice({
                     state.subCommLoading = false;
                     state.subComments = [...state.subComments, ...action.payload];
                 }else if(action.meta.arg.type === 'article'){
-                    state.article = action.payload[0];
-                    state.articleLoading = false;
+                    if (action.payload[0] === null){
+                        state.articleError = true;
+                        state.articleLoading = false;
+                    }else{
+                        state.article = action.payload[0];
+                        state.articleLoading = false;
+                    }
                 }
             })
-            .addCase(getItem.rejected, state => {state.commentsLoading = false})
+            .addCase(getItem.rejected, state => {
+                state.commentsLoading = false;
+                state.subCommLoading = false;
+                state.articleLoading = false;
+                state.articleError = false;
+            })
 
             .addCase(updateNews.pending, state => {state.newsUpdate = true})
             .addCase(updateNews.fulfilled, (state, action) => {

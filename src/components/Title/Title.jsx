@@ -24,8 +24,7 @@ const Article = () => {
     }
     return (
         <>
-            <Header onClick = {handleUpdate}>
-            </Header>
+            <Header onClick = {handleUpdate}></Header>
             <div key={article.id} className="title">
                 <div className="title__btn-back" >
                     <Link to='/'>
