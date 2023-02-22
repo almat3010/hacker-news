@@ -1,27 +1,32 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import ArticlePage from "./pages/ArticlePage";
-import './App.scss'
+import "./App.scss";
 import ErrorComponent from "./components/Error/Error";
 
 function App() {
   return (
     <Router>
       <div className="App">
-      <Switch>
-          <Route exact path='/article/:id'>
-            <ArticlePage/>
+        <Switch>
+          <Route exact path="/article/:id">
+            <ArticlePage />
           </Route>
-          <Route exact path='/'>
+          <Route exact path="/">
             <MainPage />
           </Route>
           <Route exact path="/404">
-            <ErrorComponent/> 
+            <ErrorComponent />
           </Route>
           <Route exact path="*" redirect>
             <Redirect to="/404"></Redirect>
           </Route>
-      </Switch>
+        </Switch>
       </div>
     </Router>
   );
